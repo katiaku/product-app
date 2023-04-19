@@ -1,0 +1,72 @@
+$base-color: #aed8e4;
+$background: #ffffff;
+$border: #948d8d;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    margin: 3rem;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 1rem;
+
+    button {
+        background-color: $base-color;
+        font-weight: bold;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        width: auto;
+        border-radius: 0.5rem;
+        border: none;
+    }
+}
+
+h1 {
+    margin-right: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 0rem;
+    font-weight: 500;
+
+    label {
+        display: grid;
+        grid-template-columns: 8rem 15rem 1fr;
+    }
+
+    input,
+    select {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        border: 2px solid $border;
+    }
+}
+
+span {
+    padding-left: 2rem;
+}
+
+footer {
+    background-color: $background;
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 2rem;
+    border-top: solid black 1px;
+    text-align: center;
+    width: calc(100% - 6rem);
+    font-size: small;
+
+    p {
+        margin-top: 2rem;
+    }
+}
