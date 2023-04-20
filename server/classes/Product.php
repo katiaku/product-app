@@ -1,5 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: http://localhost:3000');
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
 
 include '../inc/dbh.inc.php';
 
@@ -42,6 +44,7 @@ abstract class Product
 
     public function list()
     {
+        exit('hola');
         $query = "SELECT sku, productName, price, productType, productAttribute FROM " . $this->tableName . "ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
