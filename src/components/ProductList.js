@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 
-function ProductList() {
+export default function ProductList() {
 
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost/product-app/server/api/listProducts.php')
+        axios.get('/api/listProducts.php')
             .then(response => {
                 setProductList(response.data);
             })
@@ -54,11 +54,18 @@ function ProductList() {
                 {productList.map(product => {
                     return (
                         <div key={product.id}>
-                            <input type="checkbox" className="delete-checkbox" checked={product.checked} onChange={event => handleCheckbox(event, product.id)}></input>
-                            <p>{product.getSku()}</p>
-                            <p>{product.getProductName()}</p>
-                            <p>{product.getPrice()}</p>
-                            <p>{product.getProductTypeSpecificAttribute()}</p>
+                            <input 
+                                type="checkbox" 
+                                className="delete-checkbox" 
+                                checked={!product.checked} 
+                                onChange={event => 
+                                    handleCheckbox(event, product.id)
+                                }>
+                            </input>
+                            <p>{product.sku}</p>
+                            <p>{product.productName}</p>
+                            <p>{product.price}</p>
+                            <p>{product.productAttribute}</p>
                         </div>
                     )
                 })}
@@ -69,5 +76,3 @@ function ProductList() {
         </div>
     )
 }
-
-export default ProductList;

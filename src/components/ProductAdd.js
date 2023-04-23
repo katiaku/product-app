@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link,  useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
-function ProductAdd() {
+export default function ProductAdd() {
 
     const [sku, setSku] = useState('');
     const [productName, setProductName] = useState('');
@@ -81,7 +81,7 @@ function ProductAdd() {
         )
     };
 
-    const productTypeSpecificAttribute = PRODUCT_TYPES[productType];
+    const productAttribute = PRODUCT_TYPES[productType];
 
     let navigate = useNavigate();
 
@@ -92,21 +92,32 @@ function ProductAdd() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        if (!sku || !productName || !price || !productType || !productTypeSpecificAttribute) {
-            setErrorMessage('Please, submit required data');
-            return;
-        }
+        if (
+            !sku || 
+            !productName || 
+            !price || 
+            !productType || 
+            !productAttribute
+            ) {
+                setErrorMessage('Please, submit required data');
+                return;
+            }
 
-        if (typeof sku !== 'string' || typeof productName !== 'string' || typeof price !== 'number') {
-            alert('Please, provide the data of indicated type');
-            return;
-        }
+        if (
+            typeof sku !== 'string' || 
+            typeof productName !== 'string' || 
+            typeof price !== 'number' || 
+            typeof productAttribute !== 'string'
+            ) {
+                alert('Please, provide the data of indicated type');
+                return;
+            }
 
         try {
             const response = await axios.get('/api/check-sku.php?sku=' + sku);
             if (response.data.exists) {
                 setSkuError('SKU already exists');
-            return;
+                return;
             } else {
                 setSkuError('');
             }
@@ -120,7 +131,7 @@ function ProductAdd() {
                 productName,
                 price,
                 productType,
-                productTypeSpecificAttribute
+                productAttribute
             });
             navigate('/');
         } catch (error) {
@@ -133,7 +144,7 @@ function ProductAdd() {
             <header>
                 <h1>Product Add</h1>
                 <Link to="/">
-                    <button>Save</button>
+                    <button type='submit'>Save</button>
                 </Link>
                 <Link to="/">
                     <button>Cancel</button>
@@ -180,7 +191,7 @@ function ProductAdd() {
                         <option value="Book">Book</option>
                     </select>
                 </label>
-                {productTypeSpecificAttribute}
+                {productAttribute}
             </form>
             <footer>
                 <p>Scandiweb Test assignment</p>
@@ -188,5 +199,3 @@ function ProductAdd() {
         </div>
     )
 }
-
-export default ProductAdd;
