@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link,  useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios'
 
 export default function ProductAdd() {
@@ -83,8 +83,6 @@ export default function ProductAdd() {
 
     const productAttribute = PRODUCT_TYPES[productType];
 
-    let navigate = useNavigate();
-
     function handleTypeSwitcher(event) {
         setProductType(event.target.value);
     }
@@ -98,23 +96,23 @@ export default function ProductAdd() {
             !price || 
             !productType || 
             !productAttribute
-            ) {
-                setErrorMessage('Please, submit required data');
-                return;
-            }
+        ) {
+            setErrorMessage('Please, submit required data');
+            return;
+        }
 
         if (
             typeof sku !== 'string' || 
             typeof productName !== 'string' || 
             typeof price !== 'number' || 
             typeof productAttribute !== 'string'
-            ) {
-                alert('Please, provide the data of indicated type');
-                return;
-            }
+        ) {
+            alert('Please, provide the data of indicated type');
+            return;
+        }
 
         try {
-            const response = await axios.get('/api/check-sku.php?sku=' + sku);
+            const response = await axios.get('http://localhost/server/api/checkSku.php?sku=' + sku);
             if (response.data.exists) {
                 setSkuError('SKU already exists');
                 return;
@@ -126,14 +124,13 @@ export default function ProductAdd() {
         }
 
         try {
-            await axios.post('/api/add-product.php', {
+            await axios.post('http://localhost/server/api/addProduct.php', {
                 sku,
                 productName,
                 price,
                 productType,
                 productAttribute
             });
-            navigate('/');
         } catch (error) {
             console.log(error);
         }

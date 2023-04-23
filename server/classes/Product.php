@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: http://localhost:3000');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 

@@ -7,13 +7,12 @@ export default function ProductList() {
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/listProducts.php')
-            .then(response => {
-                setProductList(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        axios.get('http://localhost/server/api/listProducts.php')
+        .then(response => response.json())
+        .then(data => setProductList(data))
+        .catch(error => {
+            console.log(error);
+        });
     }, []);
 
     const handleCheckbox = (event, productId) => {
@@ -31,7 +30,7 @@ export default function ProductList() {
 
     const massDelete = () => {
         const selectedProducts = productList.filter(product => product.checked).map(product => product.id);
-        axios.post('/api/delete-products.php', { ids: selectedProducts })
+        axios.post('http://localhost/server/api/deleteProducts.php', { ids: selectedProducts })
         .then(response => {
             setProductList(productList.filter(product => !product.checked))
         })

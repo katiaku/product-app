@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: http://localhost:3000');
 
 const HOST = "localhost";
 const USERNAME = "root";
