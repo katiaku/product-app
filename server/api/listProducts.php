@@ -7,7 +7,6 @@ include '../classes/Book.php';
 include '../classes/DVD.php';
 include '../classes/Furniture.php';
 
-exit('test');
 $product = new Product($conn);
 $results = $product->list();
 echo $results;
