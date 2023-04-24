@@ -1,7 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+require_once('cors.php');
 
 if($_POST) {
     include '../inc/dbh.inc.php';

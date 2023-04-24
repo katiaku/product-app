@@ -1,5 +1,4 @@
 <?php
-
 include '../inc/dbh.inc.php';
 
 class Book extends Product
