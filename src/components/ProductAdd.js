@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+import axiosInstance from '../axiosInstance';
 
 export default function ProductAdd() {
 
@@ -112,7 +112,7 @@ export default function ProductAdd() {
         }
 
         try {
-            const response = await axios.get('http://localhost/server/api/checkSku.php?sku=' + sku);
+            const response = await axiosInstance.get('/checkSku.php?sku=' + sku);
             if (response.data.exists) {
                 setSkuError('SKU already exists');
                 return;
@@ -124,7 +124,7 @@ export default function ProductAdd() {
         }
 
         try {
-            await axios.post('http://localhost/server/api/addProduct.php', {
+            await axiosInstance.post('/addProduct.php', {
                 sku,
                 productName,
                 price,

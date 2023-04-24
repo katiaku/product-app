@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+import axiosInstance from '../axiosInstance';
 
 export default function ProductList() {
 
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost/server/api/listProducts.php')
-        .then(response => response.json())
-        .then(data => setProductList(data))
-        .catch(error => {
-            console.log(error);
+        axiosInstance.get('/listProducts.php')
+            .then(response => response.json())
+            .then(data => setProductList(data))
+            .catch(error => {
+                console.log(error);
         });
     }, []);
 
@@ -30,12 +30,12 @@ export default function ProductList() {
 
     const massDelete = () => {
         const selectedProducts = productList.filter(product => product.checked).map(product => product.id);
-        axios.post('http://localhost/server/api/deleteProducts.php', { ids: selectedProducts })
-        .then(response => {
-            setProductList(productList.filter(product => !product.checked))
-        })
-        .catch(error => {
-            console.log(error)
+        axiosInstance.post('/deleteProducts.php', { ids: selectedProducts })
+            .then(response => {
+                setProductList(productList.filter(product => !product.checked))
+            })
+            .catch(error => {
+                console.log(error)
         });
     }
 
