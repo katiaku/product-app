@@ -8,7 +8,13 @@ export default function ProductList() {
 
     useEffect(() => {
         axiosInstance.get('/listProducts.php')
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    throw new Error('Request failed with status code ' + response.status);
+                }
+            })
             .then(data => setProductList(data))
             .catch(error => {
                 console.log(error);

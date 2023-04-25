@@ -182,7 +182,7 @@ export default function ProductAdd() {
                 <label>
                     Type Switcher
                     <select id="productType" value={productType} onChange={handleTypeSwitcher}>
-                        <option value="" disabled selected hidden>Type Switcher</option>
+                        <option value="Select">-- Select an option --</option>
                         <option value="DVD">DVD</option>
                         <option value="Furniture">Furniture</option>
                         <option value="Book">Book</option>

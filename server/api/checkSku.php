@@ -1,7 +1,7 @@
 <?php
-require_once('cors.php');
+require_once 'cors.php';
+require_once '../inc/dbh.inc.php';
 
-include '../inc/dbh.inc.php';
 include '../classes/Product.php';
 
 $sku = $_GET['sku'];

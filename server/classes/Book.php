@@ -51,7 +51,7 @@ class Book extends Product
 
     public function list()
     {
-        $query = "SELECT sku, productName, price, productType, productAttribute FROM " . $this->tableName . "ORDER BY id DESC";
+        $query = "SELECT sku, productName, price, productType, productAttribute FROM " . $this->tableName . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $results=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
