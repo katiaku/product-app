@@ -26,7 +26,7 @@ cd src
 
 Install the dependencies:
 ```
-npm install react react-dom react-router-dom axios node-sass sass-loader
+npm install react react-dom react-router-dom axios node-sass sass-loader cors circular-json
 ```
 
 Start the development server:
