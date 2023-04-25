@@ -1,5 +1,5 @@
 <?php
-include '../inc/dbh.inc.php';
+require_once '../inc/dbh.inc.php';
 
 abstract class Product
 {
@@ -16,9 +16,86 @@ abstract class Product
         $this->conn =$conn;
     }
 
-    abstract public function add();
+    public function getSku() {
+        return $this->sku;
+    }
 
-    abstract public function list();
+    public function setSku($sku) {
+        $this->sku = $sku;
+    }
 
-    abstract public function delete($ids);
+    public function getProductName() {
+        return $this->productName;
+    }
+
+    public function setProductName($productName) {
+        $this->productName = $productName;
+    }
+
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function setPrice($price) {
+        $this->price = $price;
+    }
+
+    public function getProductType() {
+        return $this->productType;
+    }
+
+    public function setProductType($productType) {
+        $this->productType = $productType;
+    }
+
+    abstract public function getProductAttribute();
+
+    public function add()
+    {
+        try {
+            $query = "INSERT INTO products SET sku=?, productName=?, price=?, productType=?";
+            $stmt = $this->conn->prepare($query);
+            $sku = htmlspecialchars(strip_tags($this->sku));
+            $productName = htmlspecialchars(strip_tags($this->productName));
+            $price = htmlspecialchars(strip_tags($this->price));
+            $productType = htmlspecialchars(strip_tags($this->productType));
+            $stmt->bind_param('ssds', $sku, $productName, $price, $productType);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(mysqli_sql_exception $exception) {
+            die('ERROR: ' . $exception->getMessage());
+        }
+    }
+
+    public function insertProductAttribute($conn, $id)
+    {
+        $stmt = $conn->prepare("UPDATE products SET productAttribute = ? WHERE id = ?");
+        $productAttribute = $this->getProductAttribute();
+        $stmt->bind_param("si", $productAttribute, $id);
+        $stmt->execute();
+    }
+
+    public function list()
+    {
+        $query = "SELECT sku, productName, price, productAttribute FROM " . $this->tableName . " ORDER BY id DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $results=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return json_encode($results);
+    }
+
+    public function delete($ids)
+    {
+        $query = "DELETE FROM products WHERE id IN ($ids)";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

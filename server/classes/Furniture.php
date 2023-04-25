@@ -1,5 +1,5 @@
 <?php
-include '../inc/dbh.inc.php';
+require_once '../inc/dbh.inc.php';
 
 class Furniture extends Product
 {
@@ -10,66 +10,41 @@ class Furniture extends Product
     public function __construct($conn, $sku, $productName, $price, $productType, $height, $width, $length)
     {
         parent::__construct($conn);
-        $this->sku = $sku;
-        $this->productName = $productName;
-        $this->price = $price;
-        $this->productType = $productType;
-        $this->height = $height;
-        $this->width = $width;
-        $this->length = $length;
+        $this->setSku($sku);
+        $this->setProductName($productName);
+        $this->setPrice($price);
+        $this->setProductType($productType);
+        $this->setHeight($height);
+        $this->setWidth($width);
+        $this->setLength($length);
     }
 
-    public function add()
-    {
-        try {
-            $query = "INSERT INTO products SET sku=?, productName=?, price=?, productType=?";
-            $stmt = $this->conn->prepare($query);
-            $sku = htmlspecialchars(strip_tags($this->sku));
-            $productName = htmlspecialchars(strip_tags($this->productName));
-            $price = htmlspecialchars(strip_tags($this->price));
-            $productType = htmlspecialchars(strip_tags($this->productType));
-            $stmt->bind_param('ssds', $sku, $productName, $price, $productType);
+    public function getHeight() {
+        return $this->height;
+    }
 
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch(mysqli_sql_exception $exception) {
-            die('ERROR: ' . $exception->getMessage());
-        }
+    public function setHeight($height) {
+        $this->height = $height;
+    }
+
+    public function getWidth() {
+        return $this->width;
+    }
+
+    public function setWidth($width) {
+        $this->width = $width;
+    }
+
+    public function getLength() {
+        return $this->length;
+    }
+
+    public function setLength($length) {
+        $this->length = $length;
     }
 
     public function getProductAttribute()
     {
         return $this->height . "x" . $this->width . "x" . $this->length;
-    }
-
-    public function insertProductAttribute($conn, $id)
-    {
-        $stmt = $conn->prepare("UPDATE products SET productAttribute = ? WHERE id = ?");
-        $productAttribute = $this->getProductAttribute();
-        $stmt->bind_param("si", $productAttribute, $id);
-        $stmt->execute();
-    }
-
-    public function list()
-    {
-        $query = "SELECT sku, productName, price, productType, productAttribute FROM " . $this->tableName . " ORDER BY id DESC";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        $results=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        return json_encode($results);
-    }
-
-    public function delete($ids)
-    {
-        $query = "DELETE FROM products WHERE id IN ($ids)";
-        $stmt = $this->conn->prepare($query);
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }
