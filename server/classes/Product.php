@@ -85,7 +85,11 @@ abstract class Product
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $results=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        return json_encode($results);
+        foreach ($results as &$row) {
+            $row['productAttribute'] = json_decode($row['productAttribute'], true);
+        }
+        $json = json_encode($results, JSON_UNESCAPED_UNICODE | JSON_PARTIAL_OUTPUT_ON_ERROR);
+        return $json;
     }
 
     public function delete($ids)
