@@ -52,7 +52,7 @@ export default function ProductList() {
                 <Link to="/product-add">
                     <button>ADD</button>
                 </Link>
-                <button onClick={massDelete}>MASS DELETE</button>
+                <button id="delete-product-btn" onClick={massDelete}>MASS DELETE</button>
             </header>
             <hr></hr>
             <section>

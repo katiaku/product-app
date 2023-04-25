@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import CircularJSON from 'circular-json';
 
 export default function ProductAdd() {
 
@@ -16,6 +17,7 @@ export default function ProductAdd() {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [skuError, setSkuError] = useState('');
+    const navigate = useNavigate();
 
     const PRODUCT_TYPES = {
         DVD: (
@@ -26,7 +28,6 @@ export default function ProductAdd() {
                     type="text"
                     value={size}
                     onChange={(event) => setSize(event.target.value)}
-                    required
                 />
                 <span>Please, provide size</span>
             </label>
@@ -40,7 +41,6 @@ export default function ProductAdd() {
                         type="text"
                         value={height}
                         onChange={(event) => setHeight(event.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -50,7 +50,6 @@ export default function ProductAdd() {
                         type="text"
                         value={width}
                         onChange={(event) => setWidth(event.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -60,7 +59,6 @@ export default function ProductAdd() {
                         type="text"
                         value={length}
                         onChange={(event) => setLength(event.target.value)}
-                        required
                     />
                 </label>
                 <span>Please, provide dimensions</span>
@@ -74,7 +72,6 @@ export default function ProductAdd() {
                     type="text"
                     value={weight}
                     onChange={(event) => setWeight(event.target.value)}
-                    required
                 />
                 <span>Please, provide weight</span>
             </label>
@@ -88,51 +85,29 @@ export default function ProductAdd() {
     }
 
     async function handleSubmit(event) {
-        event.preventDefault();
-
-        if (
-            !sku || 
-            !productName || 
-            !price || 
-            !productType || 
-            !productAttribute
-        ) {
-            setErrorMessage('Please, submit required data');
-            return;
-        }
-
-        if (
-            typeof sku !== 'string' || 
-            typeof productName !== 'string' || 
-            typeof price !== 'number' || 
-            typeof productAttribute !== 'string'
-        ) {
-            alert('Please, provide the data of indicated type');
-            return;
-        }
-
         try {
-            const response = await axiosInstance.get('/checkSku.php?sku=' + sku);
-            if (response.data.exists) {
-                setSkuError('SKU already exists');
-                return;
-            } else {
-                setSkuError('');
+            event.preventDefault();
+    
+            if (!sku || !productName || !price || !productType || !productAttribute) {
+                alert('Please, submit required data');
             }
-        } catch (error) {
-            console.log(error);
-        }
+    
+            if (typeof sku !== 'string' || typeof productName !== 'string' || typeof productType !== 'string' || isNaN(price)) {
+                alert('Please, provide the data of indicated type');
+            }
 
-        try {
-            await axiosInstance.post('/addProduct.php', {
-                sku,
-                productName,
-                price,
-                productType,
-                productAttribute
-            });
+            const productJson = CircularJSON.stringify({ sku, productName, price, productType, productAttribute });
+    
+            const response = await axiosInstance.get(`/checkSku.php?sku=${sku}`);
+    
+            if (response.data.exists) {
+                alert('SKU already exists');
+            }
+    
+            const addProductResponse = await axiosInstance.post('/addProduct.php', productJson);
+            console.log('Product added:', addProductResponse.data);
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }
 
@@ -141,14 +116,14 @@ export default function ProductAdd() {
             <header>
                 <h1>Product Add</h1>
                 <Link to="/">
-                    <button type='submit'>Save</button>
+                    <button>Save</button>
                 </Link>
                 <Link to="/">
                     <button>Cancel</button>
                 </Link>
             </header>
             <hr></hr>
-            <form id='product_form' onSubmit={handleSubmit}>
+            <form id='product_form' onSubmit={(event) => {handleSubmit(event)}}>
                 <label>
                     SKU
                     <input
@@ -156,17 +131,15 @@ export default function ProductAdd() {
                         type="text"
                         value={sku}
                         onChange={(event) => setSku(event.target.value)}
-                        required
                     />
                 </label>
                 <label>
                     Name
                     <input
-                        id="name"
+                        id="productName"
                         type="text"
                         value={productName}
                         onChange={(event) => setProductName(event.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -176,7 +149,6 @@ export default function ProductAdd() {
                         type="text"
                         value={price}
                         onChange={(event) => setPrice(event.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -189,6 +161,7 @@ export default function ProductAdd() {
                     </select>
                 </label>
                 {productAttribute}
+                <button type="submit">Submit</button>
             </form>
             <footer>
                 <p>Scandiweb Test assignment</p>
