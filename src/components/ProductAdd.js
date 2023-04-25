@@ -106,6 +106,7 @@ export default function ProductAdd() {
     
             const addProductResponse = await axiosInstance.post('/addProduct.php', productJson);
             console.log('Product added:', addProductResponse.data);
+            navigate('/');
         } catch (error) {
             console.log(error.message);
         }
@@ -115,9 +116,7 @@ export default function ProductAdd() {
         <div>
             <header>
                 <h1>Product Add</h1>
-                <Link to="/">
-                    <button>Save</button>
-                </Link>
+                <button type="submit" form="product_form">Save</button>
                 <Link to="/">
                     <button>Cancel</button>
                 </Link>
@@ -161,7 +160,6 @@ export default function ProductAdd() {
                     </select>
                 </label>
                 {productAttribute}
-                <button type="submit">Submit</button>
             </form>
             <footer>
                 <p>Scandiweb Test assignment</p>
