@@ -15,8 +15,9 @@ export default function ProductAdd() {
     const [width, setWidth] = useState('');
     const [length, setLength] = useState('');
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [skuError, setSkuError] = useState('');
+    const [errorMessage, setErrorMessage] = useState(false);
+    const [typeError, setTypeError] = useState(false);
+    const [skuError, setSkuError] = useState(false);
     const navigate = useNavigate();
 
     const PRODUCT_TYPES = {
@@ -26,10 +27,10 @@ export default function ProductAdd() {
                 <input
                     id="size"
                     type="text"
+                    placeholder='Please, provide size'
                     value={size}
                     onChange={(event) => setSize(event.target.value)}
                 />
-                <span>Please, provide size</span>
             </label>
         ),
         Furniture: (
@@ -39,6 +40,7 @@ export default function ProductAdd() {
                     <input
                         id="height"
                         type="text"
+                        placeholder='Please, provide dimensions'
                         value={height}
                         onChange={(event) => setHeight(event.target.value)}
                     />
@@ -48,6 +50,7 @@ export default function ProductAdd() {
                     <input
                         id="width"
                         type="text"
+                        placeholder='Please, provide dimensions'
                         value={width}
                         onChange={(event) => setWidth(event.target.value)}
                     />
@@ -57,11 +60,11 @@ export default function ProductAdd() {
                     <input
                         id="length"
                         type="text"
+                        placeholder='Please, provide dimensions'
                         value={length}
                         onChange={(event) => setLength(event.target.value)}
                     />
                 </label>
-                <span>Please, provide dimensions</span>
             </>
         ),
         Book: (
@@ -70,10 +73,10 @@ export default function ProductAdd() {
                 <input
                     id="weight"
                     type="text"
+                    placeholder='Please, provide weight'
                     value={weight}
                     onChange={(event) => setWeight(event.target.value)}
                 />
-                <span>Please, provide weight</span>
             </label>
         )
     };
@@ -89,27 +92,28 @@ export default function ProductAdd() {
             event.preventDefault();
     
             if (!sku || !productName || !price || !productType || !productAttribute) {
-                alert('Please, submit required data');
+                setErrorMessage(true);
             }
     
             if (typeof sku !== 'string' || typeof productName !== 'string' || typeof productType !== 'string' || isNaN(price)) {
-                alert('Please, provide the data of indicated type');
+                setTypeError(true);
+            }
+
+            const response = await axiosInstance.get(`/checkSku.php?sku=${sku}`);
+
+            if (response.data.exists) {
+                setSkuError(true);
             }
 
             const productJson = CircularJSON.stringify({ sku, productName, price, productType, productAttribute });
-    
-            const response = await axiosInstance.get(`/checkSku.php?sku=${sku}`);
-    
-            if (response.data.exists) {
-                alert('SKU already exists');
-            }
-    
             const addProductResponse = await axiosInstance.post('/addProduct.php', productJson);
             console.log('Product added:', addProductResponse.data);
             navigate('/');
+
         } catch (error) {
             console.log(error.message);
         }
+
     }
 
     return (
@@ -160,6 +164,15 @@ export default function ProductAdd() {
                     </select>
                 </label>
                 {productAttribute}
+                {skuError && (
+                    <p className="error-message">Provided SKU already exists</p>
+                )}
+                {errorMessage && (
+                    <p className="error-message">Please, submit required data</p>
+                )}
+                {typeError && (
+                    <p className="error-message">Please, provide the data of indicated type</p>
+                )}
             </form>
             <footer>
                 <p>Scandiweb Test assignment</p>

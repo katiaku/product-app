@@ -1,3 +1,4 @@
+$alert: #b12727;
 $base-color: #aed8e4;
 $background: #ffffff;
 $border: #948d8d;
@@ -52,8 +53,9 @@ form {
     }
 }
 
-span {
-    padding-left: 2rem;
+.error-message {
+    color: $alert;
+    font-weight: bold;
 }
 
 footer {

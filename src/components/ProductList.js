@@ -12,7 +12,7 @@ export default function ProductList() {
                 if (response.status === 200) {
                     return response.data;
                 } else {
-                    throw new Error('Request failed with status code ' + response.status);
+                    console.log('Request failed with status code ' + response.status);
                 }
             })
             .then(data => setProductList(data))
