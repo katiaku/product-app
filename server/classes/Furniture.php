@@ -1,6 +1,7 @@
 <?php
 
 require_once '../inc/dbh.inc.php';
+include '../classes/Product.php';
 
 class Furniture extends Product
 {
@@ -10,7 +11,11 @@ class Furniture extends Product
 
     public function __construct($conn, $sku, $productName, $price, $height, $width, $length)
     {
-        $dimensions = $height . 'x' . $width . 'x' . $length;
+        $dimensions = [
+            'height' => $height,
+            'width' => $width,
+            'length' => $length,
+        ];
         parent::__construct($conn, $sku, $productName, $price, 'furniture', $dimensions);
         $this->height = $height;
         $this->width = $width;

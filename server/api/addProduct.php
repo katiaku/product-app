@@ -4,6 +4,7 @@ require_once 'cors.php';
 
 if($_POST) {
     require_once '../inc/dbh.inc.php';
+    include '../classes/Product.php';
     include '../classes/Book.php';
     include '../classes/DVD.php';
     include '../classes/Furniture.php';
@@ -14,9 +15,9 @@ if($_POST) {
     $productType = $_POST['productType'];
     $productAttribute = $_POST['productAttribute'];
 
-    $book = new Book($conn, $sku, $productName, $price, $productAttribute);
-    $dvd = new DVD($conn, $sku, $productName, $price, $productAttribute);
-    $furniture = new Furniture($conn, $sku, $productName, $price, $productAttribute);
+    $book = new Book($conn, $sku, $productName, $price, $weight);
+    $dvd = new DVD($conn, $sku, $productName, $price, $size);
+    $furniture = new Furniture($conn, $sku, $productName, $price, $height, $width, $length);
 
     if ($productType === 'Book') {
         $book->setProductType($productType);

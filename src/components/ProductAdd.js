@@ -139,7 +139,7 @@ export default function ProductAdd() {
                 <label>
                     Name
                     <input
-                        id="productName"
+                        id="name"
                         type="text"
                         value={productName}
                         onChange={(event) => setProductName(event.target.value)}

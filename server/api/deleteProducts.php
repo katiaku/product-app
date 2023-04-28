@@ -4,6 +4,7 @@ require_once 'cors.php';
 
 if($_POST) {
     require_once '../inc/dbh.inc.php';
+    include '../classes/Product.php';
     include '../classes/Book.php';
     include '../classes/DVD.php';
     include '../classes/Furniture.php';

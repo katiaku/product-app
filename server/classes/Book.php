@@ -1,6 +1,7 @@
 <?php
 
 require_once '../inc/dbh.inc.php';
+include '../classes/Product.php';
 
 class Book extends Product
 {
