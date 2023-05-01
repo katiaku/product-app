@@ -4,10 +4,10 @@ require_once 'cors.php';
 
 if($_POST) {
     require_once '../inc/dbh.inc.php';
-    include '../classes/Product.php';
-    include '../classes/Book.php';
-    include '../classes/DVD.php';
-    include '../classes/Furniture.php';
+    require_once '../classes/Product.php';
+    require_once '../classes/Book.php';
+    require_once '../classes/DVD.php';
+    require_once '../classes/Furniture.php';
 
     if (isset($_POST['del_ids'])) {
         $ids = implode(",", $_POST['del_ids']);

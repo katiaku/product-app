@@ -1,7 +1,7 @@
 <?php
 
 require_once '../inc/dbh.inc.php';
-include '../classes/Product.php';
+require_once '../classes/Product.php';
 
 class DVD extends Product
 {
