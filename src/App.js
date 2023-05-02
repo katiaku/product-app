@@ -7,14 +7,14 @@ import './styles.scss'
 
 function App() {
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={ <ProductList /> } />
-        <Route path="/product-add" element={ <ProductAdd /> } />
-      </Routes>
-    </Router>
-  );
+	return (
+		<Router>
+			<Routes>
+				<Route path="/" element={ <ProductList /> } />
+				<Route path="/product-add" element={ <ProductAdd /> } />
+			</Routes>
+		</Router>
+	);
 }
 
 export default App;

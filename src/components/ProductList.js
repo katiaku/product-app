@@ -61,7 +61,7 @@ export default function ProductList() {
                         <div key={product.id}>
                             <input 
                                 type="checkbox" 
-                                className="ddelete-checkbox" 
+                                className="delete-checkbox" 
                                 checked={!product.checked} 
                                 onChange={event => 
                                     handleCheckbox(event, product.id)
