@@ -43,7 +43,7 @@ export default function ProductAdd() {
                         type="text"
                         placeholder='Please, provide dimensions'
                         value={height}
-                        onChange={(event) => setHeight(event.target.value)}
+						onChange={(event) => setHeight(event.target.value)}
                     />
                 </label>
                 <label>
@@ -53,7 +53,7 @@ export default function ProductAdd() {
                         type="text"
                         placeholder='Please, provide dimensions'
                         value={width}
-                        onChange={(event) => setWidth(event.target.value)}
+						onChange={(event) => setWidth(event.target.value)}
                     />
                 </label>
                 <label>
@@ -63,7 +63,7 @@ export default function ProductAdd() {
                         type="text"
                         placeholder='Please, provide dimensions'
                         value={length}
-                        onChange={(event) => setLength(event.target.value)}
+						onChange={(event) => setLength(event.target.value)}
                     />
                 </label>
             </>
@@ -96,7 +96,7 @@ export default function ProductAdd() {
                 setErrorMessage(true);
             }
     
-            if (typeof sku !== 'string' || typeof productName !== 'string' || typeof productType !== 'string' || isNaN(price)) {
+            if (typeof sku !== 'string' || typeof productName !== 'string' || isNaN(price) || typeof productAttribute !== 'string') {
                 setTypeError(true);
             }
 
