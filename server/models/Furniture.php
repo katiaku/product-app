@@ -1,7 +1,7 @@
 <?php
 
-require_once '../inc/dbh.inc.php';
-require_once '../classes/Product.php';
+require_once '../database/dbh.inc.php';
+require_once '../models/Product.php';
 
 class Furniture extends Product
 {

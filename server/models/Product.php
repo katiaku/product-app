@@ -1,6 +1,6 @@
 <?php
 
-require_once '../inc/dbh.inc.php';
+require_once '../database/dbh.inc.php';
 
 abstract class Product
 {

@@ -1,12 +1,12 @@
 <?php
 
 require_once 'cors.php';
-require_once '../inc/dbh.inc.php';
+require_once '../database/dbh.inc.php';
 
-require_once '../classes/Product.php';
-require_once '../classes/Book.php';
-require_once '../classes/DVD.php';
-require_once '../classes/Furniture.php';
+require_once '../models/Product.php';
+require_once '../models/Book.php';
+require_once '../models/DVD.php';
+require_once '../models/Furniture.php';
 
 $book = new Book($conn, $sku, $productName, $price, $weight);
 $dvd = new DVD($conn, $sku, $productName, $price, $size);

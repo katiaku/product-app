@@ -1,29 +1,28 @@
 <?php
 
-require_once '../inc/dbh.inc.php';
-require_once '../classes/Product.php';
+require_once '../database/dbh.inc.php';
+require_once '../models/Product.php';
 
-class Book extends Product
+class DVD extends Product
 {
-    protected $weight;
+    protected $size;
 
-    public function __construct($conn, $sku, $productName, $price, $weight)
+    public function __construct($conn, $sku, $productName, $price, $size)
     {
-        parent::__construct($conn, $sku, $productName, $price, 'book', ['weight' => $weight]);
-        $this->weight = $weight;
+        parent::__construct($conn, $sku, $productName, $price, 'dvd', ['size' => $size]);
+        $this->size = $size;
     }
 
-    public function setWeight($weight) {
-        $this->weight = $weight;
+    public function setSize($size) {
+        $this->size = $size;
     }
 
-    public function getWeight() {
-        return $this->weight;
+    public function getSize() {
+        return $this->size;
     }
 
-    public function getSpecificAttribute()
-    {
-        return $this->getWeight();
+    public function getSpecificAttribute() {
+        return $this->getSize();
     }
 
     public function add()
@@ -35,8 +34,8 @@ class Book extends Product
             $productName = htmlspecialchars(strip_tags($this->productName));
             $price = htmlspecialchars(strip_tags($this->price));
             $productType = htmlspecialchars(strip_tags($this->productType));
-            $weight = htmlspecialchars(strip_tags($this->weight));
-            $productAttribute = json_encode(["weight" => $weight]);
+            $size = htmlspecialchars(strip_tags($this->size));
+            $productAttribute = json_encode(["size" => $size]);
             $stmt->bind_param('ssdss', $sku, $productName, $price, $productType, $productAttribute);
 
             if ($stmt->execute()) {
@@ -51,7 +50,7 @@ class Book extends Product
 
     public function list()
     {
-        $query = "SELECT sku, productName, price, productAttribute FROM products WHERE productType='Book' ORDER BY id DESC";
+        $query = "SELECT sku, productName, price, productAttribute FROM products WHERE productType='DVD' ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $results=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -61,13 +60,13 @@ class Book extends Product
             $sku = $row['sku'];
             $productName = $row['productName'];
             $price = $row['price'];
-            $weight = json_decode($row['productAttribute'], true)['weight'];
-            $book = new Book($conn, $sku, $productName, $price, $weight);
+            $size = json_decode($row['productAttribute'], true)['size'];
+            $dvd = new DVD($conn, $sku, $productName, $price, $size);
             $books[] = array(
                 'sku' => $sku,
                 'productName' => $productName,
                 'price' => $price,
-                'weight' => $weight
+                'size' => $size
             );
     }
     $json = json_encode($books, JSON_UNESCAPED_UNICODE | JSON_PARTIAL_OUTPUT_ON_ERROR);
