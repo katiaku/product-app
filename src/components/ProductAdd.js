@@ -18,6 +18,7 @@ export default function ProductAdd() {
     const [errorMessage, setErrorMessage] = useState(false);
     const [typeError, setTypeError] = useState(false);
     const [skuError, setSkuError] = useState(false);
+
     const navigate = useNavigate();
 
     const PRODUCT_TYPES = {
@@ -108,6 +109,7 @@ export default function ProductAdd() {
             const productJson = CircularJSON.stringify({ sku, productName, price, productType, productAttribute });
             const addProductResponse = await axiosInstance.post('/addProduct.php', productJson);
             console.log('Product added:', addProductResponse.data);
+			
             navigate('/');
 
         } catch (error) {
