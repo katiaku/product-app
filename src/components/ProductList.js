@@ -21,9 +21,9 @@ export default function ProductList() {
         });
     }, []);
 
-    const handleCheckbox = (event, productId) => {
+    const handleCheckbox = (event, productSku) => {
         const updatedProductList = productList.map(product => {
-            if (product.id === productId) {
+            if (product.sku === productSku) {
                 return {
                     ...product,
                     checked: event.target.checked
@@ -35,8 +35,8 @@ export default function ProductList() {
     }
 
     const massDelete = () => {
-        const selectedProducts = productList.filter(product => product.checked).map(product => product.id);
-        axiosInstance.post('/', { ids: selectedProducts })
+        const selectedProducts = productList.filter(product => product.checked).map(product => product.sku);
+        axiosInstance.post('/', { skus: selectedProducts })
             .then(response => {
                 setProductList(productList.filter(product => !product.checked))
             })
@@ -58,13 +58,13 @@ export default function ProductList() {
             <section>
                 {productList.map(product => {
                     return (
-                        <div key={product.id}>
+                        <div key={product.sku}>
                             <input 
                                 type="checkbox" 
                                 className="delete-checkbox" 
-                                checked={!product.checked} 
+                                checked={product.checked} 
                                 onChange={event => 
-                                    handleCheckbox(event, product.id)
+                                    handleCheckbox(event, product.sku)
                                 }>
                             </input>
                             <p>{product.sku}</p>
