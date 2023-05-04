@@ -57,9 +57,9 @@ export default function ProductList() {
                             <input 
                                 type="checkbox" 
                                 className="delete-checkbox" 
-                                checked={product.checked} 
+                                checked={selectedProducts.includes(product)} 
                                 onChange={event => 
-                                    handleCheckbox(event, product.sku)
+                                    handleCheckbox(event, product)
                                 }>
                             </input>
                             <p>{product.sku}</p>
