@@ -51,9 +51,9 @@ export default function ProductList() {
             </header>
             <hr></hr>
             <section>
-                {productList.map((product, index) => {
+                {Array.from(productList).map(product => {
                     return (
-                        <div key={index}>
+                        <div key={product}>
                             <input 
                                 type="checkbox" 
                                 className="delete-checkbox" 
