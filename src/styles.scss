@@ -33,6 +33,20 @@ h1 {
     margin-right: auto;
 }
 
+.products {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 form {
     display: flex;
     flex-direction: column;

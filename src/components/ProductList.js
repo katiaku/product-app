@@ -50,10 +50,10 @@ export default function ProductList() {
                 <button id="delete-product-btn" onClick={massDelete}>MASS DELETE</button>
             </header>
             <hr></hr>
-            <section>
+            <section id="products">
                 {Array.from(productList).map(product => {
                     return (
-                        <div key={product}>
+                        <div key={product} id="product">
                             <input 
                                 type="checkbox" 
                                 className="delete-checkbox" 
