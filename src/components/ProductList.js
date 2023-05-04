@@ -5,44 +5,39 @@ import axiosInstance from '../axiosInstance';
 export default function ProductList() {
 
     const [productList, setProductList] = useState([]);
+	const [selectedProducts, setSelectedProducts] = useState([]);
 
     useEffect(() => {
         axiosInstance.get('/')
-            .then(response => {
-                if (response.status === 200) {
-					return response.data
-                } else {
-                    console.log('Request failed with status code ' + response.status);
-                }
-            })
-            .then(data => setProductList(data))
-            .catch(error => {
-                console.log(error);
+		.then(response => {
+			setProductList(response.data);
+		})
+        .catch(error => {
+            console.log(error);
         });
     }, []);
 
-    const handleCheckbox = (event, productSku) => {
-        const updatedProductList = productList.map(product => {
-            if (product.sku === productSku) {
-                return {
-                    ...product,
-                    checked: event.target.checked
-                }
-            }
-            return product;
-        });
-        setProductList(updatedProductList)
+    const handleCheckbox = (event, product) => {
+		const { checked } = event.target;
+		const updatedProducts = [...selectedProducts];
+		if (checked) {
+		    updatedProducts.push(product);
+		} else {
+		    const index = updatedProducts.findIndex(p => p.sku === product.sku);
+		    updatedProducts.splice(index, 1);
+		}
+		setSelectedProducts(updatedProducts);
     }
 
     const massDelete = () => {
-        const selectedProducts = productList.filter(product => product.checked).map(product => product.sku);
-        axiosInstance.post('/', { skus: selectedProducts })
-            .then(response => {
-                setProductList(productList.filter(product => !product.checked))
-            })
-            .catch(error => {
-                console.log(error)
-        });
+		axiosInstance.delete('/', { data: selectedProducts.map(p => p.sku) })
+		.then(response => {
+		    setSelectedProducts([]);
+		    setProductList(productList.filter(p => !selectedProducts.includes(p)));
+		})
+		.catch(error => {
+		    console.log(error);
+		});
     }
 
     return (
