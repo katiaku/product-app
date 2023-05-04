@@ -7,7 +7,7 @@ export default function ProductList() {
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        axiosInstance.get('/listProducts.php')
+        axiosInstance.get('/')
             .then(response => {
                 if (response.status === 200) {
                     return response.data;
@@ -36,7 +36,7 @@ export default function ProductList() {
 
     const massDelete = () => {
         const selectedProducts = productList.filter(product => product.checked).map(product => product.id);
-        axiosInstance.post('/deleteProducts.php', { ids: selectedProducts })
+        axiosInstance.post('/', { ids: selectedProducts })
             .then(response => {
                 setProductList(productList.filter(product => !product.checked))
             })
