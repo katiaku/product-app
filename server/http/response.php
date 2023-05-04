@@ -1,5 +1,7 @@
 <?php
 
+require_once './cors.php';
+
 class Response
 {
     protected $statusCode;

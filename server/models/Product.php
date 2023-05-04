@@ -1,72 +1,51 @@
 <?php
 
-require_once '../database/dbh.inc.php';
-
 abstract class Product
 {
-    protected $conn;
-    protected $tableName = 'products';
     protected $sku;
-    protected $productName;
+    protected $name;
     protected $price;
-    protected $productType;
-    protected $productAttribute;
+    protected  $type;
 
-    public function __construct($conn, $sku, $productName, $price, $productType, $productAttribute)
-    {
-        $this->conn = $conn;
-        $this->sku = $sku;
-        $this->productName = $productName;
-        $this->price = $price;
-        $this->productType = $productType;
-        $this->productAttribute = $productAttribute;
+    protected function setValues($product){
+        $this->sku = $product['sku'];
+        $this->name = $product['name'];
+        $this->price = $product['price'];
+        $this->type = $product['type'];
     }
 
-    public function setSku($sku) {
-        $this->sku = $sku;
+    public abstract function add(): bool;
+
+    public static function list() {
+        $conn = Database::connect();
+        try {
+            $sql = "SELECT * FROM products";
+            $result =  $conn->query($sql);   
+            $products = []; 
+            foreach($result as $row)
+                $products[] = $row;
+            return $products;
+        } catch(Exception $e) {
+            return $e;
+        } finally {
+            Database::disconnect();
+        }  
     }
 
-    public function getSku() {
-        return $this->sku;
+    public static function delete($products): bool {
+        $conn = Database::connect();
+        try{
+            $conn->autocommit(FALSE);
+            foreach($products as $product) {
+                $conn->query("DELETE FROM products WHERE sku = '{$product['sku']}'");
+            }
+            if (!$conn->commit()) 
+                return false;
+        return true;
+        } catch(Exception $e) {
+            return false;
+        } finally {
+            Database::disconnect();
+        }
     }
-
-    public function setProductName($productName) {
-        $this->productName = $productName;
-    }
-
-    public function getProductName() {
-        return $this->productName;
-    }
-
-    public function setPrice($price) {
-        $this->price = $price;
-    }
-
-    public function getPrice() {
-        return $this->price;
-    }
-
-    public function setProductType($productType) {
-        $this->productType = $productType;
-    }
-
-    public function getProductType() {
-        return $this->productType;
-    }
-
-    public function setProductAttribute($productAttribute) {
-        $this->productAttribute = $productAttribute;
-    }
-
-    public function getProductAttribute() {
-        return $this->productAttribute;
-    }
-
-    abstract public function getSpecificAttribute();
-
-    abstract public function add();
-
-    abstract public function list();
-
-    abstract public function delete($ids);
 }

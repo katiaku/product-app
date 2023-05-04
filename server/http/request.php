@@ -1,5 +1,7 @@
 <?php
 
+require_once './cors.php';
+
 class Request
 {    
     public function method() {

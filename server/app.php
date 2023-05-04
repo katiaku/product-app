@@ -11,6 +11,7 @@ class App
         $this->response = new Response();
         $this->route =new Route($this->request, $this->response);
     }
+    
     public function run(){
         Database::connect();
         $this->route->resolve();

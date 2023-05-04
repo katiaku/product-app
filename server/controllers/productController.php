@@ -3,8 +3,6 @@
 require_once  '../models/Book.php';
 require_once  '../models/DVD.php';
 require_once  '../models/Furniture.php';
-require_once '../http/request.php';
-require_once '../http/response.php';
 
 class ProductController
 {
