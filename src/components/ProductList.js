@@ -10,7 +10,7 @@ export default function ProductList() {
         axiosInstance.get('/')
             .then(response => {
                 if (response.status === 200) {
-                    return response.data;
+					return response.data
                 } else {
                     console.log('Request failed with status code ' + response.status);
                 }
