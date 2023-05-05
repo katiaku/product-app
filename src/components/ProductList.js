@@ -51,7 +51,7 @@ export default function ProductList() {
             </header>
             <hr></hr>
             <section id="products">
-                {Array.from(productList).map(product => {
+                {productList.map(product => {
                     return (
                         <div key={product} id="product">
                             <input 

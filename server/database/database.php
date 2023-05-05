@@ -1,5 +1,7 @@
 <?php
 
+require_once './databaseManager.php';
+
 class Database implements DatabaseManager
 {
     protected static $conn;
@@ -12,7 +14,7 @@ class Database implements DatabaseManager
     public static function connect(): mysqli {
         self::$conn = mysqli_connect(self::HOST, self::USERNAME, self::PASSWORD, self::DB);
         if (!self::$conn) {
-            throw new Exception("Failed to connect to database: " . mysqli_connect_error());
+            throw new Exception("Connection failed: " . mysqli_connect_error());
         }
         return self::$conn;
     }

@@ -1,5 +1,10 @@
 <?php
 
+require_once './http/request.php';
+require_once './http/response.php';
+require_once './http/route.php';
+require_once './database/database.php';
+
 class App
 {
     protected Request $request;

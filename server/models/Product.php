@@ -1,5 +1,7 @@
 <?php
 
+require_once '../database/database.php';
+
 abstract class Product
 {
     protected $sku;

@@ -1,6 +1,8 @@
 <?php
 
 require_once '../models/Product.php';
+require_once '../database/database.php';
+require_once '../http/cors.php';
 
 class Furniture extends Product
 {

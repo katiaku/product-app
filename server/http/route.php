@@ -1,6 +1,8 @@
 <?php
 
 require_once './cors.php';
+require_once './request.php';
+require_once './response.php';
 
 class Route
 {
