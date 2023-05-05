@@ -100,15 +100,15 @@ export default function ProductAdd() {
                 setTypeError(true);
             }
 
-            const response = await axiosInstance.get(`/product-add?sku=${sku}`);
+            /* const response = await axiosInstance.get(`/product-add?sku=${sku}`);
 
             if (response.data.exists) {
                 setSkuError(true);
-            }
+            } */
 
             const productJson = CircularJSON.stringify({ sku, productName, price, productType, productAttribute });
             const addProductResponse = await axiosInstance.post('/product-add', productJson);
-            console.log('Product added:', addProductResponse.data);
+            console.log('Product added: ', addProductResponse.data);
 			
             navigate('/');
 

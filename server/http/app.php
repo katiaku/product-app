@@ -4,6 +4,8 @@ require_once './http/request.php';
 require_once './http/response.php';
 require_once './http/route.php';
 require_once './database/database.php';
+require_once './http/cors.php';
+require_once './routes/routes.php';
 
 class App
 {
