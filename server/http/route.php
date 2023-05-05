@@ -15,15 +15,15 @@ class Route
         $this->response = $response;
     }
 
-    public static function get(string $route,  $action) {
+    public static function get(string $route, $action) {
         self::$routes['get'][$route] = $action;
     }
     
-    public static function post(string $route ,$action) {
+    public static function post(string $route, $action) {
         self::$routes['post'][$route] = $action;
     }
 
-    public static function delete(string $route ,  $action) {
+    public static function delete(string $route, $action) {
         self::$routes['delete'][$route] = $action;
     }
         
@@ -31,7 +31,7 @@ class Route
         $path = $this->request->path();
         $method = $this->request->method();
         $action = self::$routes[$method][$path] ?? false;
-        if(!$action){
+        if(!$action) {
             http_response_code(404);    
             echo "Not Found";
             return;

@@ -96,9 +96,9 @@ export default function ProductAdd() {
                 setErrorMessage(true);
             }
     
-            if (typeof sku !== 'string' || typeof productName !== 'string' || isNaN(price) || typeof productAttribute !== 'string') {
+            /* if (typeof sku !== 'string' || typeof productName !== 'string' || isNaN(price) || typeof productAttribute !== 'string') {
                 setTypeError(true);
-            }
+            } */
 
             /* const response = await axiosInstance.get(`/product-add?sku=${sku}`);
 

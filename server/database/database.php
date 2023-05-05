@@ -1,6 +1,7 @@
 <?php
 
 require_once './databaseManager.php';
+require_once '../http/cors.php';
 
 class Database implements DatabaseManager
 {

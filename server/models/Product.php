@@ -7,16 +7,7 @@ abstract class Product
     protected $sku;
     protected $name;
     protected $price;
-    protected  $type;
-
-    protected function setValues($product){
-        $this->sku = $product['sku'];
-        $this->name = $product['name'];
-        $this->price = $product['price'];
-        $this->type = $product['type'];
-    }
-
-    public abstract function add(): bool;
+    protected $type;
 
     public static function list() {
         $conn = Database::connect();
@@ -34,6 +25,8 @@ abstract class Product
         }  
     }
 
+    public abstract function add(): bool;
+
     public static function delete($products): bool {
         $conn = Database::connect();
         try{
@@ -49,5 +42,12 @@ abstract class Product
         } finally {
             Database::disconnect();
         }
+    }
+
+    protected function setValues($product) {
+        $this->sku = $product['sku'];
+        $this->name = $product['name'];
+        $this->price = $product['price'];
+        $this->type = $product['type'];
     }
 }

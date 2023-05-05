@@ -21,10 +21,10 @@ export default function ProductList() {
 		const { checked } = event.target;
 		const updatedProducts = [...selectedProducts];
 		if (checked) {
-		    updatedProducts.push(product);
+			updatedProducts.push(product);
 		} else {
-		    const index = updatedProducts.findIndex(p => p.sku === product.sku);
-		    updatedProducts.splice(index, 1);
+			const index = updatedProducts.findIndex(p => p.sku === product.sku);
+			updatedProducts.splice(index, 1);
 		}
 		setSelectedProducts(updatedProducts);
     }
@@ -32,11 +32,11 @@ export default function ProductList() {
     const massDelete = () => {
 		axiosInstance.delete('/', { data: selectedProducts.map(p => p.sku) })
 		.then(response => {
-		    setSelectedProducts([]);
-		    setProductList(productList.filter(p => !selectedProducts.includes(p)));
+			setSelectedProducts([]);
+			setProductList(productList.filter(p => !selectedProducts.includes(p)));
 		})
 		.catch(error => {
-		    console.log(error);
+			console.log(error);
 		});
     }
 
@@ -53,7 +53,7 @@ export default function ProductList() {
             <section id="products">
                 {productList.map(product => {
                     return (
-                        <div key={product} id="product">
+                        <div key={product.sku} id="product">
                             <input 
                                 type="checkbox" 
                                 className="delete-checkbox" 

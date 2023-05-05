@@ -14,10 +14,23 @@ class ProductController
 
     public function __construct() {
         $this->types = [
-            'Book' =>  new Book() , 
-            'DVD' => new DVD() ,
+            'Book' => new Book(), 
+            'DVD' => new DVD(),
             'Furniture' => new Furniture()
         ];
+    }
+
+    public function list() {
+        try {
+            $productList = Product::list();
+            if (sizeof($productList))
+                $response = new Response(200, $productList);
+            else throw new Exception();
+        } catch(Exception $e) {
+            $response = new Response(502, "Error");
+        } finally {
+            $response->sendResponse();
+        }
     }
 
     public function add() {
@@ -34,19 +47,6 @@ class ProductController
             $response->sendResponse();
         } catch(Exception $e) {
             $response = new Response(409, "Input error");
-            $response->sendResponse();
-        }
-    }
-
-    public function list() {
-        try {
-            $productList = Product::list();
-            if (sizeof($productList))
-                $response = new Response(200, $productList);
-            else throw new Exception();
-        } catch(Exception $e) {
-            $response = new Response(502, "Error");
-        } finally {
             $response->sendResponse();
         }
     }
