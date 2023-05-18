@@ -1,6 +1,7 @@
 <?php
 
 require_once '../database/database.php';
+require_once '../http/cors.php';
 
 abstract class Product
 {
